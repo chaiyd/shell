@@ -10,4 +10,6 @@ for imagename in ${images[@]} ; do
   docker rmi -f $url/$imagename
 done
 
-docker pull quay.io/coreos/flannel:v0.12.0-amd64
+docker pull quay.mirrors.ustc.edu.cn/coreos/flannel:v0.12.0-amd64
+docker tag quay.mirrors.ustc.edu.cn/coreos/flannel:v0.12.0-amd64 quay.io/coreos/flannel:v0.12.0-amd64
+docker rmi quay.mirrors.ustc.edu.cn/coreos/flannel:v0.12.0-amd64
