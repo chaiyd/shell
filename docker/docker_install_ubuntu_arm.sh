@@ -25,7 +25,7 @@ sudo add-apt-repository "deb [arch=arm64] https://mirrors.aliyun.com/docker-ce/l
 sudo apt -y update
 sudo apt -y install docker-ce
 # Step 5: 更新并安装docker-compose
-sudo apt -y installl docker-compose
+sudo apt -y install docker-compose
 
 # 启动docker，并增加开机自启
 systemctl start docker
