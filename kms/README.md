@@ -1,3 +1,10 @@
-自己写的所以能用就行
-office激活需要先转换为vol版
-有bug，但是不影响使用，凑合用吧
+# kms 激活
+
+- 自己写的所以能用就行
+---
+- office激活需要先转换为vol版
+  - 先执行office-to-vol.bat
+  - 然后执行office.bat
+---
+- win10激活，执行win10.bat 
+- 有bug，但是不影响使用，凑合用吧
