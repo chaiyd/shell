@@ -66,11 +66,15 @@ echo "#########################################拉取k8s镜像##################
 sh -x ./k8s-images.sh $version
 
 echo "#######################################初始化kubernetes#################################"
+# 导出配置
+# kubeadm config print init-defaults > config.yaml
+
 kubeadm init \
 --apiserver-advertise-address=$local_ip \
 #--image-repository registry.aliyuncs.com/google_containers \
 --kubernetes-version $version \
 --pod-network-cidr=10.244.0.0/16
+
 
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
