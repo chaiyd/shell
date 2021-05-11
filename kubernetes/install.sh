@@ -56,8 +56,10 @@ repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 setenforce 0
+#sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 yum install -y kubelet-$version kubeadm-$version kubectl-$version
-systemctl enable kubelet && systemctl start kubelet
+#systemctl enable kubelet && systemctl start kubelet
+systemctl enable --now kubelet
 
 echo "#########################################拉取k8s镜像####################################"
 
