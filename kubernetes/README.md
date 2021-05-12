@@ -22,7 +22,7 @@
 
 ## kubeadm init
 - init
-  - kubeadm init --config kubeadm-init-config.yaml
+  - kubeadm init --config kubeadm-init-config.yaml --upload-certs
   ```shell
   ---
   # setting ipvs
@@ -60,3 +60,11 @@
 # Download the Calico networking manifest for etcd.
 # curl https://docs.projectcalico.org/manifests/calico-etcd.yaml -o calico.yaml
 ```
+
+## metrics
+- officaial docs
+  - [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics.git)
+  - [metrics-server](https://github.com/kubernetes-sigs/metrics-server.git)
+  ```
+  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+  ```

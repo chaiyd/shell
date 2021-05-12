@@ -30,6 +30,7 @@ etcd:
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 kind: ClusterConfiguration
 kubernetesVersion: 1.21.0
+#controlPlaneEndpoint: "LOAD_BALANCER_DNS:LOAD_BALANCER_PORT"
 networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12
