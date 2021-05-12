@@ -40,7 +40,7 @@ EOF
 modprobe overlay
 modprobe br_netfilter
 # Setup required sysctl params, these persist across reboots.
-cat cat <<EOF >/etc/sysctl.d/99-kubernetes-cri.conf
+cat <<EOF >/etc/sysctl.d/99-kubernetes-cri.conf
 net.bridge.bridge-nf-call-iptables  = 1
 net.ipv4.ip_forward                 = 1
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -57,6 +57,7 @@ sed -i '/containerd.runtimes.runc.options/a\ \ \ \ \ \ \ \ \ \ \ \ SystemdCgroup
 
 systemctl daemon-reload
 systemctl enable --now containerd
+systemctl restart containerd
 
 echo "---------------------------install kubelet,kubeadm,kubectl---------------------------"
 
@@ -69,7 +70,6 @@ gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-setenforce 0
 #sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 yum install -y kubelet-$version kubeadm-$version kubectl-$version
 # 10-kubeadm.conf add container
@@ -77,23 +77,11 @@ sed -i '/Service/aEnvironment="KUBELET_KUBEADM_ARGS=--container-runtime=remote -
 crictl config runtime-endpoint unix:///run/containerd/containerd.sock
 crictl config image-endpoint unix:///run/containerd/containerd.sock
 systemctl enable --now kubelet
+systemctl restart kubelet
 
-echo "--------------------------init kubernetes------------------------"
+# echo "--------------------------init kubernetes------------------------"
 # print kubeadm init-defaults configuration
-kubeadm config print init-defaults > init-config.yaml
-# ---
-# # setting ipvs
-# apiVersion: kubeproxy.config.k8s.io/v1alpha1
-# kind: KubeProxyConfiguration
-# mode: ipvs
-# # setting cgroupDriver systemd
-# ---
-# apiVersion: kubelet.config.k8s.io/v1beta1
-# kind: KubeletConfiguration
-# cgroupDriver: systemd
-
-#echo "------------------------------pull kubernetes-------------------------------"
-#sh -x ./k8s-images.sh $version
+# kubeadm config print init-defaults > init-config.yaml
 
 # mkdir -p $HOME/.kube
 # cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
