@@ -14,7 +14,9 @@
 ## kubernetes containerd kubeadm
 - ipvs,containerd,calico
 - Add the configuration to kubelet, otherwise unexpected errors will occur when kubeadm is reset
-  - `Environment="KUBELET_KUBEADM_ARGS=--container-runtime=remote --runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock --image-service-endpoint=unix:///run/containerd/containerd.sock"`  
+  ```shell
+  Environment="KUBELET_KUBEADM_ARGS=--container-runtime=remote --runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock --image-service-endpoint=unix:///run/containerd/containerd.sock"
+  ```
 
 ## calico
 - View Official docs
