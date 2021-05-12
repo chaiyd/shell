@@ -8,6 +8,7 @@
 
 ## kubernetes
 - install kubernetes
+- kubernetes containerd kubeadm ipvsadm calico
 
 
 ---
