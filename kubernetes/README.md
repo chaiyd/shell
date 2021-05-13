@@ -22,6 +22,7 @@
 
 ## kubeadm init
 - init
+  - kubeadm config print init-defaults > kubeadm-init-config.yaml
   - kubeadm init --config kubeadm-init-config.yaml --upload-certs
   ```shell
   ---
