@@ -65,7 +65,43 @@
 ## metrics
 - officaial docs
   - [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics.git)
+    
   - [metrics-server](https://github.com/kubernetes-sigs/metrics-server.git)
-  ```
-  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-  ```
+    ```
+    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+    kubectl logs -f metrics-server-7644b87b46-rx962 -n kube-system
+    I1130 21:21:37.127526       1 serving.go:325] Generated self-signed cert (/tmp/apiserver.crt, /tmp/apiserver.key)
+    I1130 21:21:38.378578       1 secure_serving.go:197] Serving securely on [::]:4443
+    I1130 21:21:38.378794       1 requestheader_controller.go:169] Starting RequestHeaderAuthRequestController
+    I1130 21:21:38.378861       1 shared_informer.go:240] Waiting for caches to sync for RequestHeaderAuthRequestController
+    I1130 21:21:38.378938       1 dynamic_serving_content.go:130] Starting serving-cert::/tmp/apiserver.crt::/tmp/apiserver.key
+    I1130 21:21:38.379015       1 tlsconfig.go:240] Starting DynamicServingCertificateController
+    I1130 21:21:38.379116       1 configmap_cafile_content.go:202] Starting client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+    I1130 21:21:38.379175       1 shared_informer.go:240] Waiting for caches to sync for client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+    I1130 21:21:38.379254       1 configmap_cafile_content.go:202] Starting client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file
+    I1130 21:21:38.379318       1 shared_informer.go:240] Waiting for caches to sync for client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file
+    I1130 21:21:38.479382       1 shared_informer.go:247] Caches are synced for client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+    I1130 21:21:38.479412       1 shared_informer.go:247] Caches are synced for client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file
+    I1130 21:21:38.479382       1 shared_informer.go:247] Caches are synced for RequestHeaderAuthRequestController  
+    # a few seconds logging nothing, then pod is restarting right after logging those last lines:   
+    I1130 21:22:04.475279       1 configmap_cafile_content.go:223] Shutting down client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+    I1130 21:22:04.475333       1 tlsconfig.go:255] Shutting down DynamicServingCertificateController
+    I1130 21:22:04.475339       1 dynamic_serving_content.go:145] Shutting down serving-cert::/tmp/apiserver.crt::/tmp/apiserver.key
+    I1130 21:22:04.475365       1 secure_serving.go:241] Stopped listening on [::]:4443
+    ```
+
+  - The container args on my metrics-server.yaml are:
+    - https://github.com/kubernetes-sigs/metrics-server/issues/637
+    ```shell
+    spec:
+      containers:
+        - args:
+            - --cert-dir=/tmp
+            - --secure-port=4443
+            - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+            - --kubelet-use-node-status-port
+            - --kubelet-insecure-tls
+          image: k8s.gcr.io/metrics-server/metrics-server:v0.4.4
+          # image: chaiyd/metrics-server:v0.4.4
+    ```
