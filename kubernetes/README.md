@@ -26,6 +26,10 @@
   - kubeadm init --config kubeadm-init-config.yaml --upload-certs
   ```shell
   ---
+  # setting containerd
+  nodeRegistration:
+    criSocket: /var/run/containerd/containerd.sock
+  ---
   # setting ipvs
   apiVersion: kubeproxy.config.k8s.io/v1alpha1
   kind: KubeProxyConfiguration

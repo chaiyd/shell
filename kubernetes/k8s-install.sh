@@ -81,7 +81,8 @@ systemctl restart kubelet
 
 # echo "--------------------------init kubernetes------------------------"
 # print kubeadm init-defaults configuration
-# kubeadm config print init-defaults > init-config.yaml
+# kubeadm config print init-defaults > kubeadm-init-config.yaml
+# kubeadm init --config=kubeadm-init-config.yaml
 
 # mkdir -p $HOME/.kube
 # cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
