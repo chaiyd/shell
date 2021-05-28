@@ -7,8 +7,10 @@
 - 使用kms服务，实现激活office，Windows
 
 ## kubernetes
-- install kubernetes
 - kubernetes containerd kubeadm ipvsadm calico
+- [docs](https://github.com/chaiyd/kubernetes.git)
+    - [https://github.com/chaiyd/kubernetes.git](https://github.com/chaiyd/kubernetes.git)
+
 
 
 ---
