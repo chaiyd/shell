@@ -109,3 +109,23 @@
           image: k8s.gcr.io/metrics-server/metrics-server:v0.4.4
           # image: chaiyd/metrics-server:v0.4.4
     ```
+
+
+## MetalLB
+- https://metallb.universe.tf/
+- Kubernetes does not offer an implementation of network load-balancers (Services of type LoadBalancer) for bare metal clusters.
+- configmap.yaml
+  ```yaml
+   apiVersion: v1
+   kind: ConfigMap
+   metadata:
+     namespace: metallb-system
+     name: config
+   data:
+     config: |
+       address-pools:
+         - name: default
+       protocol: layer2
+         addresses:
+           - 192.168.6.240-192.168.6.245
+  ```
